@@ -1,6 +1,6 @@
-//https://github.com/betomoedano/calculator-RN-darkmode
-import * as React from "react";
-import { useState } from 'react';
+
+
+import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
 import { ThemeContext } from './src/context/ThemeContext';
@@ -13,16 +13,22 @@ export default function App() {
   const [firstVal, setFirstVal] = useState('');
   const [secVal, setSecVal] = useState('');
   const [operation, setOperation] = React.useState('');
-  const [result, setResult]  = React.useState<Number | null >(null);
+  const [result, setResult]  = React.useState<Number | 'Waiting' >('Waiting');
+
 
   const clear = () => {
-    setFirstVal("");
-    setSecVal("");
-    setOperation("");
+    setFirstVal('');
+    setSecVal('');
+    setOperation('');
     setResult(null);
 }
 
 const calculateResult = () => {
+  clear();
+    console.log("Before Vals: ")
+    sendValues(firstVal, secVal, operation)
+    console.log(result)
+
     switch(operation) {
         case "+":
           setResult(parseInt(firstVal) + parseInt(secVal));
@@ -37,9 +43,14 @@ const calculateResult = () => {
           setResult(parseInt(firstVal) * parseInt(secVal));
           break;
     }
-
-    console.log(result);
+    console.log("After Vals: ")
+    sendValues(firstVal, secVal, operation)
+    
 }
+
+  useEffect(() => {
+    console.log(result);
+  });
 
 function sendValues(firstVal: any, secVal : any, operation : any) {
   console.log(firstVal);
@@ -101,13 +112,14 @@ function sendValues(firstVal: any, secVal : any, operation : any) {
     </TouchableOpacity>
     <TouchableOpacity
         style={styles.operBut}
-        onPress={() => setOperation("/")}
+        onPress=
+        {() => setOperation("/")}
       >
       <Text style={styles.textOne}>/</Text>
     </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <Text>{firstVal}</Text>
+        <Text style={styles.result}>Result: {'' + result}</Text>
       </View>
       <View style={styles.row}>
         <TouchableOpacity
@@ -174,6 +186,10 @@ const styles = StyleSheet.create({
   submitBtn: {
     color: "white",
     fontSize: 20,
+  },
+  result: {
+    fontSize: 30,
+    fontWeight: '700'
   }
 
 

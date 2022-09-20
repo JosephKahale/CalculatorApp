@@ -20,7 +20,7 @@ export default function App() {
     setFirstVal('');
     setSecVal('');
     setOperation('');
-    setResult(null);
+    setResult('Waiting');
 }
 
 const calculateResult = () => {
@@ -31,16 +31,16 @@ const calculateResult = () => {
 
     switch(operation) {
         case "+":
-          setResult(parseInt(firstVal) + parseInt(secVal));
+          setResult(parseFloat(firstVal) + parseFloat(secVal));
           break;
         case "-":
-          setResult(parseInt(firstVal) - parseInt(secVal));
+          setResult(parseFloat(firstVal) - parseFloat(secVal));
           break;
         case "/":
-          setResult(parseInt(firstVal) / parseInt(secVal));
+          setResult(parseFloat(firstVal) / parseFloat(secVal));
           break;
         case "*":
-          setResult(parseInt(firstVal) * parseInt(secVal));
+          setResult(parseFloat(firstVal) * parseFloat(secVal));
           break;
     }
     console.log("After Vals: ")
